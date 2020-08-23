@@ -1,0 +1,18 @@
+<ng-container *ngIf="courses$ | async as courses">
+  <ul>
+    <li *ngFor="let course of courses">
+      {{ course.name }}
+    </li>
+  </ul>
+</ng-container>
+
+<ng-container *ngIf="loading$ | async">
+  Daten werden geladen...
+</ng-container>
+
+<!-- Original Meldung ist optional -->
+<ng-container *ngIf="error$ | async as fehler">
+  <p>Fehler!</p>
+  <p>{{ fehler.message }}</p>
+</ng-container>
+

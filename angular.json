@@ -115,6 +115,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "redux"
+    }
+  },
+  "defaultProject": "redux",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
