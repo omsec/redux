@@ -1,7 +1,7 @@
 <ng-container *ngIf="courses$ | async as courses">
   <ul>
     <li *ngFor="let course of courses">
-      {{ course.name }}
+      <a [routerLink]="['/course', course.id]">{{ course.name }}</a>
     </li>
   </ul>
 </ng-container>

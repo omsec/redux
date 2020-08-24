@@ -3,13 +3,18 @@ import {
   ActionReducerMap,
   createFeatureSelector,
   createSelector,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
+
+// hinzugefügt
+import * as fromRouter from '@ngrx/router-store';
+import { routerReducer } from '@ngrx/router-store'; // nötig ??
 
 import { environment } from '../../environments/environment';
 import { Course } from '../_models/course';
 import { CourseActions, CourseActionTypes } from '../actions/course.actions';
 import { HttpErrorResponse } from '@angular/common/http';
+
 
 // Teilobjekte vom Store (State) - manuell erstellt
 export interface CourseState {
@@ -20,6 +25,7 @@ export interface CourseState {
 
 // dies ist der gesamte Store (manuell "zusammengesetzt" aus den Teilen)
 export interface State {
+  router: fromRouter.RouterReducerState<any>;
   course: CourseState;
 }
 
@@ -67,6 +73,7 @@ export function courseReducer(state: CourseState = initialCourseState, action: C
 
 // Reducer registrieren
 export const reducers: ActionReducerMap<State> = {
+  router: routerReducer, // ergänzt
   course: courseReducer
 };
 
@@ -98,4 +105,13 @@ export const getAllCourses = createSelector(
 export const getCoursesError = createSelector(
   getCourseState,
   courseState => courseState.error
+);
+
+
+// Router Selectors ergänzt
+export const getRouterState = (state: State) => state.router;
+
+export const getCurrentRouteState = createSelector(
+  getRouterState,
+  (state: fromRouter.RouterReducerState) => state.state
 );

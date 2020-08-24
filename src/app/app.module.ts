@@ -14,11 +14,16 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseEffects } from './effects/course.effects';
+import { CourseShowComponent } from './course-show/course-show.component';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+
+import { CustomSerializer} from './reducers/custom-serializer';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CourseListComponent
+    CourseListComponent,
+    CourseShowComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,12 @@ import { CourseEffects } from './effects/course.effects';
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([AppEffects]),
-    EffectsModule.forFeature([CourseEffects])
+    EffectsModule.forFeature([CourseEffects]),
+    // eigener Serializer erstellt, damit nur die benötigten Daten ausgelesen werden,
+    // und nicht der ganze State
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer, // ToDo: anderer Name?
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
